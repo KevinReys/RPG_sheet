@@ -26,6 +26,7 @@ public class Jtable_Alterar_Dados {
 	private JTextField txtIdade;
 	private JTable tabelaNomes;
 	private JButton btnAlterar;
+	private JButton btnDeletar;
 
 	/**
 	 * Launch the application.
@@ -58,7 +59,7 @@ public class Jtable_Alterar_Dados {
 		frmRpg.getContentPane().setBackground(new Color(255, 255, 255));
 		frmRpg.setBackground(new Color(255, 255, 255));
 		frmRpg.setTitle("RPG");
-		frmRpg.setBounds(100, 100, 651, 491);
+		frmRpg.setBounds(100, 100, 921, 559);
 		frmRpg.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmRpg.getContentPane().setLayout(null);
 		
@@ -119,9 +120,6 @@ public class Jtable_Alterar_Dados {
 
 		
 		tabelaNomes = new JTable();
-		
-		
-		
 		//COMANDO QUE AO CLICAR NA LINHA, ALTERAMOS OS DADOS
 		tabelaNomes.addMouseListener(new MouseAdapter() {
 			@Override
@@ -213,6 +211,32 @@ public class Jtable_Alterar_Dados {
 		btnAlterar.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnAlterar.setBounds(242, 372, 181, 33);
 		frmRpg.getContentPane().add(btnAlterar);
+		
+		
+		
+		
+		
+		//BOTÃO DE DELETAR
+		
+		btnDeletar = new JButton("Deletar");
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				DefaultTableModel linha = (DefaultTableModel)tabelaNomes.getModel();
+				
+				try { //TRATAMENTO DE ERRO (try=TENTAR)
+					int numeroLinhaItemSelecionado = tabelaNomes.getSelectedRow();
+					linha.removeRow(numeroLinhaItemSelecionado); //removeRow - REMOVE LINHA SELECIONADA
+					
+					
+				} catch (Exception e2) { //CASO CONTRÁRIO (catch=EXCESSÃO)
+					JOptionPane.showMessageDialog(null, "Não há nenhum registro seleionado");
+				}
+			}
+		});
+		btnDeletar.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnDeletar.setBounds(433, 372, 181, 33);
+		frmRpg.getContentPane().add(btnDeletar);
 		
 	}
 }
