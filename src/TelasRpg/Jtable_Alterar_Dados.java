@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
@@ -11,18 +13,19 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
 
-public class Transferir_Dados_da_Jtable_para_Jtextfields {
+public class Jtable_Alterar_Dados {
 
 	private JFrame frmRpg;
 	private JTextField txtNome;
 	private JTextField txtSobrenome;
 	private JTextField txtIdade;
 	private JTable tabelaNomes;
+	private JButton btnAlterar;
 
 	/**
 	 * Launch the application.
@@ -31,7 +34,7 @@ public class Transferir_Dados_da_Jtable_para_Jtextfields {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Transferir_Dados_da_Jtable_para_Jtextfields window = new Transferir_Dados_da_Jtable_para_Jtextfields();
+					Jtable_Alterar_Dados window = new Jtable_Alterar_Dados();
 					window.frmRpg.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +46,7 @@ public class Transferir_Dados_da_Jtable_para_Jtextfields {
 	/**
 	 * Create the application.
 	 */
-	public Transferir_Dados_da_Jtable_para_Jtextfields() {
+	public Jtable_Alterar_Dados() {
 		initialize();
 	}
 
@@ -60,7 +63,7 @@ public class Transferir_Dados_da_Jtable_para_Jtextfields {
 		frmRpg.getContentPane().setLayout(null);
 		
 		//CENTRALIZAR TELA
-		frmRpg.setLocationRelativeTo(null);
+				frmRpg.setLocationRelativeTo(null);
 		
 		JLabel lblNewLabel = new JLabel("Nome");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -113,8 +116,13 @@ public class Transferir_Dados_da_Jtable_para_Jtextfields {
 		
 		
 		
+
 		
 		tabelaNomes = new JTable();
+		
+		
+		
+		//COMANDO QUE AO CLICAR NA LINHA, ALTERAMOS OS DADOS
 		tabelaNomes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -134,6 +142,9 @@ public class Transferir_Dados_da_Jtable_para_Jtextfields {
 				
 			}
 		});
+		
+		
+		
 		tabelaNomes.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		scrollPane.setViewportView(tabelaNomes);
 		tabelaNomes.setModel(new DefaultTableModel(
@@ -144,7 +155,7 @@ public class Transferir_Dados_da_Jtable_para_Jtextfields {
 			}
 		));
 		
-		JButton btnSalvar = new JButton("Inserir Linha");
+		JButton btnSalvar = new JButton("Salvar");
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -167,8 +178,41 @@ public class Transferir_Dados_da_Jtable_para_Jtextfields {
 		tabelaNomes.setRowHeight(30);
 		
 		btnSalvar.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnSalvar.setBounds(407, 372, 181, 33);
+		btnSalvar.setBounds(51, 372, 181, 33);
 		frmRpg.getContentPane().add(btnSalvar);
+		
+		btnAlterar = new JButton("Alterar");
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				//BIBLIOTECA PARA TRABALHAR COM A TABELA
+				DefaultTableModel modelo = (DefaultTableModel)tabelaNomes.getModel();
+				
+				//PEGA O NÚMERO DA LINHA QUE ESTÁ SELECIONADA
+				int linha = tabelaNomes.getSelectedRow();
+				
+				if(linha >=0) {
+					
+					//modelo - DEFAULTTABLEMODEL
+					//setValueAt - COLOCA UMA INFORMAÇÃO
+					//txtNome.getText() - PEGANDO O TEXTO QUE ESTÁ NO CAMPO DO TXT
+					//linha - ONÚMERO DA LINHA QUE EU SELECIONEI
+					//0 - O NÚMERO DA COLUNA QUE VOU ALTERAR A INFORMAÇÃO
+					modelo.setValueAt(txtNome.getText(), linha, 0);
+					modelo.setValueAt(txtSobrenome.getText(), linha, 1);
+					modelo.setValueAt(txtIdade.getText(), linha, 2);
+					
+					
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "Por favor, selecione uma linha para alterar a informação");
+					
+				}
+			}
+		});
+		btnAlterar.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnAlterar.setBounds(242, 372, 181, 33);
+		frmRpg.getContentPane().add(btnAlterar);
 		
 	}
 }
